@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cosmic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Friendship Day! 💙✨</title>
+
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Dynamic Canvas Background for Floating Hearts, Sparkles & Mouse Dust -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- Animated Glowing Background Orbs -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Top Quick Control Bar -->
+  <header class="top-nav-bar">
+    
+    <!-- Theme Switcher Pills -->
+    <div class="theme-picker" title="Switch Aesthetic Theme">
+      <span class="picker-label"><i class="fa-solid fa-palette"></i> Mood:</span>
+      <button class="theme-btn active" data-theme="cosmic" title="Cosmic Night">🌌 Cosmic</button>
+      <button class="theme-btn" data-theme="rosegold" title="Rose Gold Sunset">💖 Rose</button>
+      <button class="theme-btn" data-theme="cyber" title="Cyber Neon">⚡ Cyber</button>
+      <button class="theme-btn" data-theme="golden" title="Golden Hour">🌿 Golden</button>
+    </div>
+
+    <!-- Audio & Vibe Selector -->
+    <div class="audio-controls-group">
+      <select id="audioVibeSelect" class="vibe-select" title="Choose Music Mood">
+        <option value="piano">🎹 Peaceful Piano</option>
+        <option value="lofi">🌇 Lofi Chill</option>
+        <option value="upbeat">✨ Sparkle Beats</option>
+      </select>
+      <button id="audioToggleBtn" class="floating-audio-btn" title="Toggle Music">
+        <i class="fa-solid fa-music"></i>
+        <span class="sound-wave">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+    </div>
+
+  </header>
+
+  <div class="app-container">
+    
+    <!-- Main Glass Celebration Card -->
+    <main class="card glass-card">
+      
+      <!-- Top Badge & Title Header -->
+      <div class="card-header">
+        <div class="badge-row">
+          <span class="tag-badge"><i class="fa-solid fa-sparkles"></i> August Celebration</span>
+          <span id="friendBadge" class="friend-badge"><i class="fa-solid fa-shield-heart"></i> Best Friends Forever</span>
+        </div>
+        
+        <h1 class="main-title">Happy Friendship Day <span id="recipientNameDisplay">My Friend</span> <span class="heart-pulse">💙</span></h1>
+        <p class="subtitle">A timeless collection of 13 priceless moments & pure joy</p>
+
+        <!-- Personalization Accordion Toggle -->
+        <button id="togglePersonalizeBtn" class="personalize-toggle-btn">
+          <i class="fa-solid fa-pen-to-square"></i> Personalize Greeting Card <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <!-- Hidden Personalization Box -->
+        <div id="personalizeBox" class="personalize-box hidden">
+          <div class="input-group">
+            <label for="friendNameInput"><i class="fa-solid fa-user-heart"></i> Friend's Name:</label>
+            <input type="text" id="friendNameInput" placeholder="Enter friend's name (e.g. Alex)" value="My Bestie">
+          </div>
+          <div class="input-group">
+            <label for="badgeSelect"><i class="fa-solid fa-award"></i> Title Badge:</label>
+            <select id="badgeSelect">
+              <option value="Best Friends Forever">BFF Forever 💙</option>
+              <option value="Partner in Crime">Partner in Crime 🕵️‍♂️</option>
+              <option value="Lifelong Soulmate">Lifelong Soulmate 🌟</option>
+              <option value="Crazy & Unstoppable">Crazy & Unstoppable 🔥</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typewriter Heartfelt Message Box -->
+      <div class="message-wrapper">
+        <div class="quote-icon quote-left"><i class="fa-solid fa-quote-left"></i></div>
+        <p id="msg" class="message-text"></p>
+        <div class="quote-icon quote-right"><i class="fa-solid fa-quote-right"></i></div>
+        <button id="replayMsgBtn" class="mini-icon-btn" title="Replay Message"><i class="fa-solid fa-rotate-right"></i></button>
+      </div>
+
+      <!-- Photo Filter Control Bar -->
+      <div class="filter-bar">
+        <span class="filter-label"><i class="fa-solid fa-wand-magic"></i> Photo FX:</span>
+        <button class="filter-btn active" data-filter="normal">✨ Normal</button>
+        <button class="filter-btn" data-filter="vintage">🎞️ Vintage</button>
+        <button class="filter-btn" data-filter="bw">🖤 B&W</button>
+        <button class="filter-btn" data-filter="warm">🌅 Sunset</button>
+        <button class="filter-btn" data-filter="cyber">⚡ Neon</button>
+      </div>
+
+      <!-- Interactive 3D Polaroid Photo Frame Section -->
+      <section class="slideshow-section">
+        <div class="slideshow-header">
+          <span id="imgCounter" class="counter-badge"><i class="fa-regular fa-image"></i> Photo 1 of 13</span>
+          <div class="slideshow-actions">
+            <button id="playPauseBtn" class="pill-btn" title="Play/Pause Slideshow">
+              <i class="fa-solid fa-pause"></i> <span id="playPauseText">Pause</span>
+            </button>
+            <button id="openGalleryBtn" class="pill-btn secondary" title="View All Photos">
+              <i class="fa-solid fa-grid-2"></i> Grid View
+            </button>
+            <button id="openTimelineBtn" class="pill-btn tertiary" title="View Memory Timeline">
+              <i class="fa-solid fa-timeline"></i> Timeline
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D Tilt Polaroid Container -->
+        <div class="photo-frame-wrapper">
+          <button class="nav-arrow left" onclick="prevImg()" title="Previous Photo">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+
+          <!-- 3D Polaroid Frame with Mouse Tilt physics -->
+          <div class="polaroid-card-3d" id="polaroid3D">
+            <div class="tape-strip tape-top"></div>
+            <div class="tape-strip tape-corner"></div>
+
+            <div class="photo-frame filter-normal" id="photoFrame">
+              <img id="slide" src="pic/WhatsApp Image 2026-08-01 at 8.56.40 PM (1).jpeg" alt="Friendship Memory">
+              
+              <!-- Auto-play progress bar -->
+              <div class="progress-bar-container">
+                <div id="slideshowProgress" class="progress-bar"></div>
+              </div>
+            </div>
+
+            <!-- Polaroid Bottom Handwritten Caption -->
+            <div class="polaroid-caption-area">
+              <span id="photoCaption" class="polaroid-handwriting">Precious Moment 1</span>
+              <span id="photoTag" class="photo-tag-chip">#BestMemories</span>
+            </div>
+          </div>
+
+          <button class="nav-arrow right" onclick="nextImg()" title="Next Photo">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+
+        <!-- Thumbnail Strip Preview -->
+        <div class="thumbnail-strip" id="thumbnailStrip">
+          <!-- Dynamically populated thumbnails -->
+        </div>
+      </section>
+
+      <!-- Interactive Celebration Buttons -->
+      <footer class="card-footer">
+        <button id="celebrateBtn" class="btn-primary glow-btn">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Send Love & Fireworks <i class="fa-solid fa-heart"></i>
+        </button>
+      </footer>
+
+    </main>
+
+    <!-- Footer Note -->
+    <footer class="app-footer">
+      <p>Created with 💙 for true friendships that last a lifetime</p>
+    </footer>
+
+  </div>
+
+  <!-- Fullscreen Photo Gallery Lightbox Modal -->
+  <div id="galleryModal" class="modal">
+    <div class="modal-content glass-card">
+      <div class="modal-header">
+        <h2><i class="fa-solid fa-images"></i> Friendship Gallery Grid (13 Photos)</h2>
+        <button id="closeGalleryBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="gallery-grid" id="galleryGrid">
+          <!-- Dynamically loaded grid images -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Memory Timeline Modal -->
+  <div id="timelineModal" class="modal">
+    <div class="modal-content glass-card">
+      <div class="modal-header">
+        <h2><i class="fa-solid fa-timeline"></i> Friendship Memory Timeline</h2>
+        <button id="closeTimelineBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="timeline-container" id="timelineContainer">
+          <!-- Dynamically loaded timeline nodes -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
