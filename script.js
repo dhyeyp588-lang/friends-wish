@@ -155,7 +155,7 @@ togglePersonalizeBtn.addEventListener("click", () => {
 
 friendNameInput.addEventListener("input", (e) => {
   const val = e.target.value.trim();
-  recipientNameDisplay.textContent = val ? val : "My Friend";
+  recipientNameDisplay.textContent = val ? val : "Baba Ji";
 });
 
 badgeSelect.addEventListener("change", (e) => {
